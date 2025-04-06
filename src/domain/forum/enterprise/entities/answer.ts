@@ -11,6 +11,10 @@ export interface AnswerProps {
 }
 
 export class Answer extends Entity<AnswerProps> {
+	get questionId() {
+		return this.props.questionId
+	}
+
 	get authorId() {
 		return this.props.authorId
 	}

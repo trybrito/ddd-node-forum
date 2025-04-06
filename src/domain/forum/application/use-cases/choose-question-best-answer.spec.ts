@@ -1,0 +1,54 @@
+import { InMemoryQuestionsRepository } from 'tests/repositories/in-memory-questions-repository'
+import { makeQuestion } from 'tests/factories/make-question'
+import { InMemoryAnswersRepository } from 'tests/repositories/in-memory-answers-repository'
+import { ChooseQuestionBestAnswerUseCase } from './choose-question-best-answer'
+import { makeAnswer } from 'tests/factories/make-answer'
+
+let inMemoryAnswersRepository: InMemoryAnswersRepository
+let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+let sut: ChooseQuestionBestAnswerUseCase
+
+describe('Choose Question Best Answer', () => {
+	beforeEach(() => {
+		inMemoryAnswersRepository = new InMemoryAnswersRepository()
+		inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
+		sut = new ChooseQuestionBestAnswerUseCase(
+			inMemoryQuestionsRepository,
+			inMemoryAnswersRepository,
+		)
+	})
+
+	it('should be able to choose the best answer', async () => {
+		const question = makeQuestion()
+		const answer = makeAnswer({
+			questionId: question.id,
+		})
+
+		await inMemoryQuestionsRepository.create(question)
+		await inMemoryAnswersRepository.create(answer)
+
+		await sut.execute({
+			answerId: answer.id.toString(),
+			authorId: question.authorId.toString(),
+		})
+
+		expect(inMemoryQuestionsRepository.items[0].bestAnswerId).toEqual(answer.id)
+	})
+
+	it('should not allow that other users to choose the best answer', async () => {
+		const question = makeQuestion()
+		const answer = makeAnswer({
+			questionId: question.id,
+		})
+
+		await inMemoryQuestionsRepository.create(question)
+		await inMemoryAnswersRepository.create(answer)
+
+		await expect(() =>
+			sut.execute({
+				answerId: answer.id.toString(),
+				authorId: 'other-author',
+			}),
+		).rejects.toBeInstanceOf(Error)
+	})
+})
