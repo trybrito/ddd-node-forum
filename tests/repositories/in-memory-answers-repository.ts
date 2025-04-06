@@ -22,4 +22,12 @@ export class InMemoryAnswersRepository implements AnswersRepository {
 
 		this.items.splice(answerToBeDeletedIndex, 1)
 	}
+
+	async save(answer: Answer) {
+		const answerToBeUpdatedIndex = this.items.findIndex(
+			(item) => item.id === answer.id,
+		)
+
+		this.items[answerToBeUpdatedIndex] = answer
+	}
 }
