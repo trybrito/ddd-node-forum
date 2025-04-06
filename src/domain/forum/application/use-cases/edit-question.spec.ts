@@ -22,18 +22,16 @@ describe('Edit Question', () => {
 
 		await inMemoryQuestionsRepository.create(newQuestion)
 		await sut.execute({
-			questionId: 'question-1',
+			questionId: newQuestion.id.toString(),
 			authorId: 'author-1',
 			title: 'Example Title',
 			content: 'Example content',
 		})
 
-		expect(inMemoryQuestionsRepository.items[0]).toEqual(
-			expect.objectContaining({
-				title: 'Example Title',
-				content: 'Example content',
-			}),
-		)
+		expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
+			title: 'Example Title',
+			content: 'Example content',
+		})
 	})
 
 	it('should not be able to edit questions from other users', async () => {
@@ -48,7 +46,7 @@ describe('Edit Question', () => {
 
 		await expect(() =>
 			sut.execute({
-				questionId: 'question-1',
+				questionId: newQuestion.id.toString(),
 				authorId: 'different-author-1',
 				title: 'Example Title',
 				content: 'Example content',
