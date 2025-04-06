@@ -1,3 +1,4 @@
+import type { Answer } from '../../enterprise/entities/answer'
 import type { AnswersRepository } from '../repositories/answers-repository'
 
 interface EditAnswerUseCaseRequest {
@@ -6,7 +7,9 @@ interface EditAnswerUseCaseRequest {
 	content: string
 }
 
-interface EditAnswerUseCaseResponse {}
+interface EditAnswerUseCaseResponse {
+	answer: Answer
+}
 
 export class EditAnswerUseCase {
 	constructor(private answersRepository: AnswersRepository) {}
@@ -30,6 +33,6 @@ export class EditAnswerUseCase {
 
 		await this.answersRepository.save(answer)
 
-		return {}
+		return { answer }
 	}
 }
