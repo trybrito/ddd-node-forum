@@ -43,7 +43,7 @@ describe('Fetch Question Answers', () => {
 	it('should not be able to access an out of range page', async () => {
 		for (let i = 1; i <= 22; i++) {
 			await inMemoryAnswersRepository.create(
-				makeAnswer({ createdAt: new Date(2025, 2, 20) }),
+				makeAnswer({ questionId: new UniqueEntityId('question-1') }),
 			)
 		}
 
