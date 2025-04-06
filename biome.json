@@ -25,6 +25,9 @@
 				"noUnusedImports": "error",
 				"noUnusedVariables": "warn",
 				"noUnusedFunctionParameters": "warn"
+			},
+			"suspicious": {
+				"noEmptyInterface": "off"
 			}
 		}
 	},

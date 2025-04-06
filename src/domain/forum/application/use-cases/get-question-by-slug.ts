@@ -1,11 +1,11 @@
 import type { Question } from '../../enterprise/entities/question'
 import type { QuestionsRepository } from '../repositories/questions-repository'
 
-type GetQuestionBySlugUseCaseRequest = {
+interface GetQuestionBySlugUseCaseRequest {
 	slug: string
 }
 
-type GetQuestionBySlugUseCaseResponse = {
+interface GetQuestionBySlugUseCaseResponse {
 	question: Question
 }
 
