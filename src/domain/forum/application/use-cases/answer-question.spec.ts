@@ -15,7 +15,7 @@ describe('Answer Question Use Case', () => {
 		const { answer } = await answerQuestion.execute({
 			questionId: '1',
 			instructorId: '1',
-			content: 'Test Answer',
+			content: 'Test answer',
 		})
 
 		expect(answer.content).toEqual('Test answer')
