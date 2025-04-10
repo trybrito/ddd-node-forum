@@ -28,6 +28,9 @@
 			},
 			"suspicious": {
 				"noEmptyInterface": "off"
+			},
+			"complexity": {
+				"noBannedTypes": "off"
 			}
 		}
 	},
