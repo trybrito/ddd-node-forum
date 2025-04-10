@@ -6,11 +6,11 @@ export class Left<L> {
 		this.value = value
 	}
 
-	isRight(): this is Left<L> {
+	isRight(): this is Right<never> {
 		return false
 	}
 
-	isLeft(): this is Right<never> {
+	isLeft(): this is Left<L> {
 		return true
 	}
 }
