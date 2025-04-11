@@ -1,7 +1,7 @@
 import { InMemoryQuestionsRepository } from 'tests/repositories/forum/in-memory-questions-repository'
 import { makeQuestion } from 'tests/factories/forum/make-question'
 import { FetchRecentQuestionsUseCase } from './fetch-recent-questions'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { ResourceNotFoundError } from '../../../../core/errors/custom/resource-not-found-error'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let sut: FetchRecentQuestionsUseCase
