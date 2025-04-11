@@ -12,9 +12,13 @@ let sut: EditQuestionUseCase
 
 describe('Edit Question', () => {
 	beforeEach(() => {
-		inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
 		inMemoryQuestionAttachmentsRepository =
 			new InMemoryQuestionAttachmentsRepository()
+
+		inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+			inMemoryQuestionAttachmentsRepository,
+		)
+
 		sut = new EditQuestionUseCase(
 			inMemoryQuestionsRepository,
 			inMemoryQuestionAttachmentsRepository,
@@ -70,7 +74,7 @@ describe('Edit Question', () => {
 		])
 	})
 
-	it.skip('should not be able to edit questions from other users', async () => {
+	it('should not be able to edit questions from other users', async () => {
 		const newQuestion = makeQuestion(
 			{
 				authorId: new UniqueEntityId('author-1'),
