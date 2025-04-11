@@ -1,6 +1,6 @@
-import { InMemoryAnswersRepository } from 'tests/repositories/in-memory-answers-repository'
-import { makeAnswer } from 'tests/factories/make-answer'
-import { FetchQuestionAnswersUseCase } from './fetch-question-aswers'
+import { InMemoryAnswersRepository } from 'tests/repositories/forum/in-memory-answers-repository'
+import { makeAnswer } from 'tests/factories/forum/make-answer'
+import { FetchQuestionAnswersUseCase } from './fetch-question-answers'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedError } from './errors/not-allowed-error'
 

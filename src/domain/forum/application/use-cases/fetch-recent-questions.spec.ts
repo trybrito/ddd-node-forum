@@ -1,5 +1,5 @@
-import { InMemoryQuestionsRepository } from 'tests/repositories/in-memory-questions-repository'
-import { makeQuestion } from 'tests/factories/make-question'
+import { InMemoryQuestionsRepository } from 'tests/repositories/forum/in-memory-questions-repository'
+import { makeQuestion } from 'tests/factories/forum/make-question'
 import { FetchRecentQuestionsUseCase } from './fetch-recent-questions'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 

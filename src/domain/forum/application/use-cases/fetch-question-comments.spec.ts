@@ -1,7 +1,7 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { InMemoryQuestionCommentsRepository } from 'tests/repositories/in-memory-question-comments-repository'
+import { InMemoryQuestionCommentsRepository } from 'tests/repositories/forum/in-memory-question-comments-repository'
 import { FetchQuestionCommentsUseCase } from './fetch-question-comments'
-import { makeQuestionComment } from 'tests/factories/make-question-comment'
+import { makeQuestionComment } from 'tests/factories/forum/make-question-comment'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let inMemoryQuestionCommentsRepository: InMemoryQuestionCommentsRepository

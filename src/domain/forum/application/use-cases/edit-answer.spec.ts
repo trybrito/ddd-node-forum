@@ -1,10 +1,10 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { InMemoryAnswersRepository } from 'tests/repositories/in-memory-answers-repository'
+import { InMemoryAnswersRepository } from 'tests/repositories/forum/in-memory-answers-repository'
 import { EditAnswerUseCase } from './edit-answer'
-import { makeAnswer } from 'tests/factories/make-answer'
+import { makeAnswer } from 'tests/factories/forum/make-answer'
 import { NotAllowedError } from './errors/not-allowed-error'
-import { InMemoryAnswerAttachmentsRepository } from 'tests/repositories/in-memory-answer-attachments-repository'
-import { makeAnswerAttachment } from 'tests/factories/make-answer-attachment'
+import { InMemoryAnswerAttachmentsRepository } from 'tests/repositories/forum/in-memory-answer-attachments-repository'
+import { makeAnswerAttachment } from 'tests/factories/forum/make-answer-attachment'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
