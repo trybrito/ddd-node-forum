@@ -13,7 +13,7 @@ describe('Comment on Answer', () => {
 		sut = new DeleteAnswerCommentUseCase(inMemoryAnswerCommentsRepository)
 	})
 
-	it('should be able to delete a answer comment', async () => {
+	it('should be able to delete an answer comment', async () => {
 		const answerComment = makeAnswerComment()
 
 		await inMemoryAnswerCommentsRepository.create(answerComment)

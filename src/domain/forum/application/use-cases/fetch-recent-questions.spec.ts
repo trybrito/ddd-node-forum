@@ -1,6 +1,7 @@
 import { InMemoryQuestionsRepository } from 'tests/repositories/in-memory-questions-repository'
 import { makeQuestion } from 'tests/factories/make-question'
 import { FetchRecentQuestionsUseCase } from './fetch-recent-questions'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let sut: FetchRecentQuestionsUseCase
@@ -22,13 +23,17 @@ describe('Fetch Recent Questions', () => {
 			makeQuestion({ createdAt: new Date(2025, 2, 18) }),
 		)
 
-		const { questions } = await sut.execute({ page: 1 })
+		const result = await sut.execute({ page: 1 })
 
-		expect(questions).toEqual([
-			expect.objectContaining({ createdAt: new Date(2025, 2, 21) }),
-			expect.objectContaining({ createdAt: new Date(2025, 2, 20) }),
-			expect.objectContaining({ createdAt: new Date(2025, 2, 18) }),
-		])
+		expect(result.isRight()).toBe(true)
+
+		if (result.isRight()) {
+			expect(result.value.questions).toEqual([
+				expect.objectContaining({ createdAt: new Date(2025, 2, 21) }),
+				expect.objectContaining({ createdAt: new Date(2025, 2, 20) }),
+				expect.objectContaining({ createdAt: new Date(2025, 2, 18) }),
+			])
+		}
 	})
 
 	it('should be able to fetch paginated recent questions', async () => {
@@ -38,9 +43,13 @@ describe('Fetch Recent Questions', () => {
 			)
 		}
 
-		const { questions } = await sut.execute({ page: 2 })
+		const result = await sut.execute({ page: 2 })
 
-		expect(questions).toHaveLength(2)
+		expect(result.isRight()).toBe(true)
+
+		if (result.isRight()) {
+			expect(result.value.questions).toHaveLength(2)
+		}
 	})
 
 	it('should not be able to access an out of range page', async () => {
@@ -50,6 +59,9 @@ describe('Fetch Recent Questions', () => {
 			)
 		}
 
-		expect(() => sut.execute({ page: 3 })).rejects.toBeInstanceOf(Error)
+		const result = await sut.execute({ page: 3 })
+
+		expect(result.isLeft()).toBe(true)
+		expect(result.value).toBeInstanceOf(ResourceNotFoundError)
 	})
 })

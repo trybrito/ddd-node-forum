@@ -2,6 +2,7 @@ import { InMemoryAnswersRepository } from 'tests/repositories/in-memory-answers-
 import { makeAnswer } from 'tests/factories/make-answer'
 import { FetchQuestionAnswersUseCase } from './fetch-question-aswers'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let sut: FetchQuestionAnswersUseCase
@@ -23,9 +24,12 @@ describe('Fetch Question Answers', () => {
 			makeAnswer({ questionId: new UniqueEntityId('question-2') }),
 		)
 
-		const { answers } = await sut.execute({ questionId: 'question-1', page: 1 })
+		const result = await sut.execute({ questionId: 'question-1', page: 1 })
 
-		expect(answers).toHaveLength(2)
+		expect(result.isRight()).toBe(true)
+		if (result.isRight()) {
+			expect(result.value.answers).toHaveLength(2)
+		}
 	})
 
 	it('should be able to fetch paginated question answers', async () => {
@@ -35,9 +39,12 @@ describe('Fetch Question Answers', () => {
 			)
 		}
 
-		const { answers } = await sut.execute({ questionId: 'question-1', page: 2 })
+		const result = await sut.execute({ questionId: 'question-1', page: 2 })
 
-		expect(answers).toHaveLength(2)
+		expect(result.isRight()).toBe(true)
+		if (result.isRight()) {
+			expect(result.value.answers).toHaveLength(2)
+		}
 	})
 
 	it('should not be able to access an out of range page', async () => {
@@ -47,8 +54,9 @@ describe('Fetch Question Answers', () => {
 			)
 		}
 
-		expect(() =>
-			sut.execute({ questionId: 'question-1', page: 3 }),
-		).rejects.toBeInstanceOf(Error)
+		const result = await sut.execute({ questionId: 'question-1', page: 3 })
+
+		expect(result.isLeft()).toBe(true)
+		expect(result.value).toBeInstanceOf(NotAllowedError)
 	})
 })

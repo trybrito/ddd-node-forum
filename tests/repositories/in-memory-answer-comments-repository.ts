@@ -15,11 +15,11 @@ export class InMemoryAnswerCommentsRepository
 	}
 
 	async findManyByAnswerId(answerId: string, { page }: PaginationParams) {
-		const questionComments = this.items
+		const answerComments = this.items
 			.filter((item) => item.answerId.toString() === answerId)
 			.slice((page - 1) * 20, page * 20)
 
-		return questionComments
+		return answerComments
 	}
 
 	async create(answerComment: AnswerComment) {
