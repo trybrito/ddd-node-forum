@@ -32,7 +32,8 @@
 			"complexity": {
 				"noBannedTypes": "off"
 			}
-		}
+		},
+		"ignore": ["src/core/events/domain-events.ts"]
 	},
 	"javascript": {
 		"formatter": {

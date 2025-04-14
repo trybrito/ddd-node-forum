@@ -12,4 +12,17 @@ export abstract class Entity<Props> {
 		this._id = id ?? new UniqueEntityId(id)
 		this.props = props
 	}
+
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	public equals(entity: Entity<any>) {
+		if (entity === this) {
+			return true
+		}
+
+		if (entity._id === this._id) {
+			return true
+		}
+
+		return false
+	}
 }
