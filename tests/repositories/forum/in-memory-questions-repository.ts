@@ -2,6 +2,7 @@ import type { PaginationParams } from '@/core/repositories/pagination-params'
 import type { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository'
 import type { Question } from '@/domain/forum/enterprise/entities/question'
 import type { QuestionAttachmentsRepository } from '@/domain/forum/application/repositories/question-attachments-repository'
+import { DomainEvents } from '@/core/events/domain-events'
 
 export class InMemoryQuestionsRepository implements QuestionsRepository {
 	public items: Question[] = []
@@ -33,6 +34,8 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
 	async create(question: Question) {
 		this.items.push(question)
+
+		DomainEvents.dispatchEventsForAggregate(question.id)
 	}
 
 	async save(question: Question): Promise<void> {
@@ -41,6 +44,8 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 		)
 
 		this.items[questionToBeUpdatedIndex] = question
+
+		DomainEvents.dispatchEventsForAggregate(question.id)
 	}
 
 	async delete(question: Question) {
